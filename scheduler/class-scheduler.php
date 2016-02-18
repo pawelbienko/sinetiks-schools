@@ -1,5 +1,4 @@
 <?php
-require_once(ROOTDIR . DS . $scheduler. DS . 'calendar.php');
 
 function NK_schools_scheduler () {
 ?>
@@ -16,6 +15,11 @@ $rowsClass    = $wpdb->get_results("SELECT id, name from school_class");
 
 if(isset($_GET['day'])){
     
+    $day   = $_GET['day'];
+    $month = $_GET['month'];
+    $year  = $_GET['year'];
+    $date  = $year.'-'.$month.'-'.$day;
+    
     $subject  = $_POST["subject"];
     $teacher  = $_POST["teacher"];
     $class    = $_POST["class"];
@@ -31,7 +35,8 @@ if(isset($_GET['day'])){
                         'teacher'     => $teacher,
                         'class'       => $class,
                         'lesson'      => $lesson,
-                        'class_room'  => $class_room
+                        'class_room'  => $class_room,
+                        'subject_date'=> $date        
                     ), //data
                     array('%s','%s', '%s', '%s') //data format			
             );
@@ -99,7 +104,8 @@ $rowsScheduler = $wpdb->get_results("SELECT sch.id, sub.name as subject, tea.nam
                                     school_scheduler as sch 
                                     LEFT JOIN school_class as cla ON sch.class = cla.id 
                                     LEFT JOIN school_teachers as tea ON sch.teacher = tea.id
-                                    LEFT JOIN school_subjects as sub ON sch.subject = sub.id"
+                                    LEFT JOIN school_subjects as sub ON sch.subject = sub.id 
+                                    WHERE subject_date = '$date'"
         );
 ?>
     <table class="table">
