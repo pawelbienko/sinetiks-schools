@@ -1,25 +1,43 @@
 <?php
-function NK_student_list () {
+function NK_student_list() {
 ?>
-<link type="text/css" href="<?php echo WP_PLUGIN_URL; ?>/sinetiks-schools/css/style-admin.css" rel="stylesheet" />
-<div class="wrap">
-<h2>Uczniowie</h2>
-<a href="<?php echo admin_url('admin.php?page=NK_student_create'); ?>">Dodaj</a>
-<?php
-global $wpdb;
-$rows = $wpdb->get_results("SELECT id,name from school_students");
-echo "<table class='wp-list-table widefat fixed'>";
-echo "<tr><th>ID</th><th>Name</th><th>&nbsp;</th></tr>";
-foreach ($rows as $row ){
-	echo "<tr>";
-	echo "<td>$row->id</td>";
-	echo "<td>$row->name</td>";
-        echo "<td>$row->guardian</td>";
-        echo "<td>$row->id_class</td>";
-	echo "<td><a href='".admin_url('admin.php?page=sinetiks_student_update&id='.$row->id)."'>Update</a></td>";
-	echo "</tr>";}
-echo "</table>";
-?>
+
+<div class="container">
+    <h2>Uczniowie</h2>
+    <a class='btn btn-default' href="<?php echo admin_url('admin.php?page=NK_student_create'); ?>">Dodaj</a>
+    <?php
+        global $wpdb;
+        $rows = $wpdb->get_results("SELECT id, name, guardian, id_class from school_students");
+    ?>
+    <table class="table">
+        <tr><th>ID</th><th>Nazwa</th><th>Opiekun</th><th>Klasa</th><th>&nbsp;</th></tr>
+        <?php
+        foreach ($rows as $row ){
+            echo "<tr>";
+                echo "<td>$row->id</td>";
+                echo "<td>$row->name</td>";
+                echo "<td>$row->guardian</td>";
+                echo "<td>$row->id_class</td>";
+        ?>        
+                <td>
+                    <a class='btn btn-default' href="<?php echo admin_url('admin.php?page=NK_student_update&id='.$row->id)?>">Popraw dane</a>
+                    <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                        <input type="hidden" name="id" hidden="" value="<?php echo $row->id ?>">
+                       <button type='submit' name='delete' class='btn btn-default' onclick="return confirm('Czy na pewno chcesz usunąc pozycje z listy ?')">
+                       Usuń</button>
+                    </form>
+                </td>
+            <?php
+            echo "</tr>";
+        }?>
+    </table>
 </div>
 <?php
+
+    if(isset($_POST['delete'])){
+        $id = $_POST['id'];
+        $wpdb->query($wpdb->prepare("DELETE FROM school_students WHERE id = %s",$id));
+
+        header('Location: '.$_SERVER['REQUEST_URI']);
+    }
 }
