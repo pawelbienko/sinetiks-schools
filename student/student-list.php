@@ -10,7 +10,7 @@ function NK_student_list() {
         $rows = $wpdb->get_results("SELECT id, name, guardian, id_class from school_students");
     ?>
     <table class="table">
-        <tr><th>ID</th><th>Nazwa</th><th>Opiekun</th><th>Klasa</th><th>&nbsp;</th></tr>
+        <tr><th>ID</th><th>Nazwa</th><th>Opiekun</th><th>Klasa</th><th>Akcje</th></tr>
         <?php
         foreach ($rows as $row ){
             echo "<tr>";
@@ -20,12 +20,16 @@ function NK_student_list() {
                 echo "<td>$row->id_class</td>";
         ?>        
                 <td>
-                    <a class='btn btn-default' href="<?php echo admin_url('admin.php?page=NK_student_update&id='.$row->id)?>">Popraw dane</a>
-                    <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
-                        <input type="hidden" name="id" hidden="" value="<?php echo $row->id ?>">
-                       <button type='submit' name='delete' class='btn btn-default' onclick="return confirm('Czy na pewno chcesz usunąc pozycje z listy ?')">
-                       Usuń</button>
-                    </form>
+                    <div class="col-md-3">
+                        <a class='btn btn-default' href="<?php echo admin_url('admin.php?page=NK_student_update&id='.$row->id)?>">Popraw dane</a>
+                    </div>
+                    <div class="col-md-2">
+                        <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                            <input type="hidden" name="id" hidden="" value="<?php echo $row->id ?>">
+                           <button type='submit' name='delete' class='btn btn-default' onclick="return confirm('Czy na pewno chcesz usunąc pozycje z listy ?')">
+                           Usuń</button>
+                        </form>
+                    </div>    
                 </td>
             <?php
             echo "</tr>";

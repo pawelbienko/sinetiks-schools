@@ -4,6 +4,7 @@ $files = array(
     'class',
     'subject',
     'student',
+    'mark',
 );
 
 foreach ($files as $route){

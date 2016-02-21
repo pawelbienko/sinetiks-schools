@@ -9,7 +9,7 @@ class Calendar {
     /**
      * Constructor
      */
-    public function __construct(){     
+    public function __construct(){  
         $this->naviHref = htmlentities($_SERVER['PHP_SELF']).'?page=NK_schools_scheduler&';
     }
      

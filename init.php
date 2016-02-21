@@ -3,8 +3,7 @@
 Plugin Name: Schools
 Description:
 Version: 1
-Author: sinetiks.com
-Author URI: http://sinetiks.com
+Author: NK
 */
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
@@ -107,5 +106,31 @@ function NK_schools_modifymenu() {
             'manage_options', //capability
             'NK_student_update', //menu slug
             'NK_student_update'//function
+        ); 
+        
+        add_menu_page( //parent slug
+            'Oceny', //page title
+            'Oceny', //menu title
+            'manage_options', //capability
+            'NK_mark_list', //menu slug
+            'NK_mark_list'//function
+        );
+        
+        //this is a submenu
+	add_submenu_page('NK_mark_list', //parent slug
+            'Dodaj nową oceną', //page title
+            'Dodaj nowe', //menu title
+            'manage_options', //capability
+            'NK_mark_create', //menu slug
+            'NK_mark_create'//function
+        ); 
+	
+	//this submenu is HIDDEN, however, we need to add it anyways
+	add_submenu_page(null, //parent slug
+            'Popraw ocene', //page title
+            'Popraw', //menu title
+            'manage_options', //capability
+            'NK_mark_update', //menu slug
+            'NK_mark_update'//function
         ); 
 }
