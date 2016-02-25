@@ -1,5 +1,6 @@
 <?php
 function NK_mark_create () {
+    require_once(ROOTDIR . DS . 'function'. DS . 'loadCSS.php');
     global $wpdb;
     $rowsSubject = $wpdb->get_results("SELECT id, name FROM school_subjects");
 

@@ -1,5 +1,6 @@
 <?php
 function NK_mark_list () {
+    require_once(ROOTDIR . DS . 'function'. DS . 'loadCSS.php');
 ?>
 <div class="container">
 <h2>Przedmioty</h2>

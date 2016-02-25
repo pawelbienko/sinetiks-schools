@@ -1,5 +1,7 @@
 <?php
 function NK_class_update () {
+    require_once(ROOTDIR . DS . 'function'. DS . 'loadCSS.php');
+    
     global $wpdb;
     
     $id   = $_GET["id"];

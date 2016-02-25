@@ -1,6 +1,7 @@
 <?php
 
 function NK_schools_scheduler () {
+    require_once(ROOTDIR . DS . 'function'. DS . 'loadCSS.php');
 ?>
     <div class="container">
     <h2>Plan zajęć</h2>

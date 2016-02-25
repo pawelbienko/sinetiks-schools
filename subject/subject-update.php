@@ -1,5 +1,6 @@
 <?php
 function NK_subject_update () {
+    require_once(ROOTDIR . DS . 'function'. DS . 'loadCSS.php');
     global $wpdb;
     
     $id   = $_GET["id"];

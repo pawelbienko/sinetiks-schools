@@ -1,5 +1,6 @@
 <?php
 function NK_subject_create () {
+    require_once(ROOTDIR . DS . 'function'. DS . 'loadCSS.php');
     $id = $_POST["id"];
     $name = $_POST["name"];
     //insert

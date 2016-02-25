@@ -1,5 +1,6 @@
 <?php
 function NK_student_create () {   
+    require_once(ROOTDIR . DS . 'function'. DS . 'loadCSS.php');
     global $wpdb;
     $rowsUsers  = $wpdb->get_results("SELECT u.ID as ID, user_login 
                                       FROM `wp_users` as u

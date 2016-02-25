@@ -8,10 +8,6 @@ Author: NK
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ?>
-<link type="text/css" href="<?php echo WP_PLUGIN_URL; ?>/sinetiks-schools/css/style-admin.css" rel="stylesheet" />
-<link type="text/css" href="<?php echo WP_PLUGIN_URL; ?>/sinetiks-schools/css/style-calendar.css" rel="stylesheet" />
-<link type="text/css" href="<?php echo WP_PLUGIN_URL; ?>/sinetiks-schools/css/bootstrap.min.css" rel="stylesheet" />
-
 <?php
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOTDIR', plugin_dir_path(__FILE__));
@@ -25,7 +21,7 @@ function NK_schools_modifymenu() {
 	//this is the main item for the menu
 	add_menu_page('Klasy', //page title
             'Klasy', //menu title
-            'read', //capabilities
+            'manage_options', //capabilities
             'NK_class_list', //menu slug
             'NK_class_list' //function
 	);
@@ -111,7 +107,7 @@ function NK_schools_modifymenu() {
         add_menu_page( //parent slug
             'Oceny', //page title
             'Oceny', //menu title
-            'manage_options', //capability
+            'read', //capability
             'NK_mark_list', //menu slug
             'NK_mark_list'//function
         );
@@ -119,8 +115,8 @@ function NK_schools_modifymenu() {
         //this is a submenu
 	add_submenu_page('NK_mark_list', //parent slug
             'Dodaj nową oceną', //page title
-            'Dodaj nowe', //menu title
-            'manage_options', //capability
+            'Dodaj', //menu title
+            'read', //capability
             'NK_mark_create', //menu slug
             'NK_mark_create'//function
         ); 
@@ -129,8 +125,34 @@ function NK_schools_modifymenu() {
 	add_submenu_page(null, //parent slug
             'Popraw ocene', //page title
             'Popraw', //menu title
-            'manage_options', //capability
+            'read', //capability
             'NK_mark_update', //menu slug
             'NK_mark_update'//function
         ); 
+        
+        add_menu_page( //parent slug
+            'Obecności', //page title
+            'Obecności', //menu title
+            'read', //capability
+            'NK_attendance_list', //menu slug
+            'NK_attendance_list'//function
+        );
+        
+        //this is a submenu
+	add_submenu_page('NK_attendance_list', //parent slug
+            'Dodaj obecność', //page title
+            'Dodaj', //menu title
+            'read', //capability
+            'NK_attendance_create', //menu slug
+            'NK_attendance_create'//function
+        ); 
+	
+	//this submenu is HIDDEN, however, we need to add it anyways
+	add_submenu_page(null, //parent slug
+            'Popraw obecność', //page title
+            'Popraw', //menu title
+            'read', //capability
+            'NK_attendance_update', //menu slug
+            'NK_attendance_update'//function
+        );
 }

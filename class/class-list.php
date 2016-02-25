@@ -1,5 +1,6 @@
 <?php
 function NK_class_list () {
+    require_once(ROOTDIR . DS . 'function'. DS . 'loadCSS.php');
 ?>
     <div class="container">
         <h2>Klasy</h2>
