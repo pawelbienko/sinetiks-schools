@@ -14,6 +14,15 @@ define('ROOTDIR', plugin_dir_path(__FILE__));
 
 require_once(ROOTDIR . DS .'function'. DS .'include-file.php');
 
+add_action( 'user_new_form', 'my_extra_user_fields');
+add_action( 'show_user_profile', 'my_extra_user_fields' );
+add_action( 'edit_user_profile', 'my_extra_user_fields' );
+
+add_action( 'user_register', 'save_my_extra_user_fields' );
+add_action( 'personal_options_update', 'save_my_extra_user_fields' );
+add_action( 'edit_user_profile_update', 'save_my_extra_user_fields' ); 
+register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );
+
 //menu items
 add_action('admin_menu','NK_schools_modifymenu');
 function NK_schools_modifymenu() {

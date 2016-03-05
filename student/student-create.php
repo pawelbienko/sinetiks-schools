@@ -65,9 +65,3 @@ function NK_student_create () {
     </div>
 <?php
 }
-
-add_action( 'show_user_profile', 'my_extra_user_fields' );
-add_action( 'edit_user_profile', 'my_extra_user_fields' );
-
-add_action( 'personal_options_update', 'save_my_extra_user_fields' );
-add_action( 'edit_user_profile_update', 'save_my_extra_user_fields' );
