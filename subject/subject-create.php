@@ -11,7 +11,7 @@ function NK_subject_create () {
                     array('name' => $name), //data
                     array('%s', '%s') //data format			
             );
-            $message.="Nauczyciel dodany !";
+            $message.="Przedmiot dodany !";
     }
     ?>
     <div class="container">

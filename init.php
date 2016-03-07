@@ -60,6 +60,15 @@ function NK_schools_modifymenu() {
             'NK_schools_scheduler', //menu slug
             'NK_schools_scheduler'//function
         );
+        
+        //this submenu is HIDDEN, however, we need to add it anyways
+	add_submenu_page(null, //parent slug
+            'Popraw plan zajęć', //page title
+            'Popraw', //menu title
+            'manage_options', //capability
+            'NK_schools_scheduler_update', //menu slug
+            'NK_schools_scheduler_update'//function
+        ); 
        
         add_menu_page( //parent slug
             'Przedmioty', //page title

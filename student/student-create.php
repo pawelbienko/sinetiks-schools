@@ -6,7 +6,7 @@ function NK_student_create () {
                                       FROM `wp_users` as u
                                       LEFT JOIN `wp_usermeta` as m 
                                       ON u.ID = m.user_id
-                                      WHERE m.meta_value = 'ROLE_GUARD'"
+                                      WHERE m.meta_value LIKE '%guard_role%'"
             );
 
     $rowsClass    = $wpdb->get_results("SELECT id, name FROM school_class");

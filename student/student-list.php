@@ -11,11 +11,11 @@ function NK_student_list() {
         $rows = $wpdb->get_results("SELECT id, name, guardian, id_class from school_students");
     ?>
     <table class="table">
-        <tr><th>ID</th><th>Nazwa</th><th>Opiekun</th><th>Klasa</th><th>Akcje</th></tr>
+        <tr><!--<th>ID</th>--><th>Nazwa</th><th>Opiekun</th><th>Klasa</th><th>Akcje</th></tr>
         <?php
         foreach ($rows as $row ){
             echo "<tr>";
-                echo "<td>$row->id</td>";
+//                echo "<td>$row->id</td>";
                 echo "<td>$row->name</td>";
                 echo "<td>$row->guardian</td>";
                 echo "<td>$row->id_class</td>";
@@ -42,7 +42,8 @@ function NK_student_list() {
     if(isset($_POST['delete'])){
         $id = $_POST['id'];
         $wpdb->query($wpdb->prepare("DELETE FROM school_students WHERE id = %s",$id));
-
+        ob_clean();
+        
         header('Location: '.$_SERVER['REQUEST_URI']);
     }
 }

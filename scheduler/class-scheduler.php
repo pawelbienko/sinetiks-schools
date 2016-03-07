@@ -8,7 +8,11 @@ function NK_schools_scheduler () {
     <?php
     global $wpdb;
     $rowsSubject  = $wpdb->get_results("SELECT id, name from school_subjects");
-    $rowsTeachers = $wpdb->get_results("SELECT id, name from school_teachers");
+    $rowsTeachers = $wpdb->get_results("SELECT u.ID as id, user_login as name
+                                        FROM `wp_users` as u
+                                        LEFT JOIN `wp_usermeta` as m 
+                                        ON u.ID = m.user_id
+                                        WHERE m.meta_value LIKE '%teacher_role%'");
     $rowsClass    = $wpdb->get_results("SELECT id, name from school_class");
 
     if(isset($_GET['day'])){
@@ -97,31 +101,45 @@ function NK_schools_scheduler () {
             <button type="submit" name="insert" class="btn btn-default">Zapisz</button>
           </form>  
         <?php
-        $rowsScheduler = $wpdb->get_results("SELECT sch.id, sub.name as subject, tea.name as teacher, cla.name as class, lesson, class_room 
+        $rowsScheduler = $wpdb->get_results("SELECT sch.id, sub.name as subject, tea.display_name as teacher, cla.name as class, lesson, class_room 
                                             FROM
                                             school_scheduler as sch 
                                             LEFT JOIN school_class as cla ON sch.class = cla.id 
-                                            LEFT JOIN school_teachers as tea ON sch.teacher = tea.id
+                                            LEFT JOIN wp_users as tea ON sch.teacher = tea.id
                                             LEFT JOIN school_subjects as sub ON sch.subject = sub.id 
-                                            WHERE subject_date = '$date'"
-                );
+                                            WHERE subject_date = '$date' ORDER BY class ASC"
+        );
         ?>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Przedmiot</th><th>Nauczyciel</th><th>Klasa</th><th>Godzina lekcyjna</th><th>Klasa Lekcyjna</th>
+                        <th>Przedmiot</th><th>Nauczyciel</th><th>Klasa</th><th>Godzina lekcyjna</th><th>Klasa Lekcyjna</th><th>&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
          <?php       
                 foreach ($rowsScheduler as $row ){
-                   echo '<tr>'
+                    echo '<tr>'
                       . '<td>'. $row->subject. '</td>'
                       . '<td>'. $row->teacher.'</td>'
                       . '<td>'. $row->class.'</td>'
                       . '<td>'. $row->lesson.'</td>'
-                      . '<td>'. $row->class_room.'</td>'     
-                      . '</tr>';
+                      . '<td>'. $row->class_room.'</td>';
+                    ?>
+                        <td>
+                            <div class="col-md-4">
+                                <a class='btn btn-default' href="<?php echo admin_url('admin.php?page=NK_schools_scheduler_update&id='.$row->id)?>">Popraw dane</a>
+                            </div>
+                            <div class="col-md-2">
+                                <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                                    <input type="hidden" name="id" hidden="" value="<?php echo $row->id ?>">
+                                   <button type='submit' name='delete' class='btn btn-default' onclick="return confirm('Czy na pewno chcesz usunąc pozycje z listy ?')">
+                                   Usuń</button>
+                                </form>
+                            </div>    
+                        </td>   
+                    <?php    
+                    echo '</tr>';
                 }    
         ?>        
                 </tbody>
@@ -136,4 +154,8 @@ function NK_schools_scheduler () {
     ?>
     </div>
 <?php
+    if(isset($_POST['delete'])){
+        $id = $_POST['id'];
+        $wpdb->query($wpdb->prepare("DELETE FROM school_scheduler WHERE id = %s",$id));
+    }
 }
