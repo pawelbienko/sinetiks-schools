@@ -2,10 +2,8 @@
 function NK_attendance_create () {
     require_once(ROOTDIR . DS . 'function'. DS . 'loadCSS.php');
     
-    $mailer = new PHPMailer;
+  //  $mailer = new PHPMailer;
 
-    
-    
     global $wpdb;
     $date  = date("Y-m-d");
 
@@ -15,14 +13,16 @@ function NK_attendance_create () {
                                        ON sch.subject = sub.id
                                        WHERE subject_date = '$date'");
     
-    $rowsStudent = $wpdb->get_results("SELECT id, name FROM school_students");
-
+    $rowsStudent = $wpdb->get_results("SELECT id, name, guardian FROM school_students");
+    
     $id_student = $_POST["id_student"];
-    $id_lesson  = $_POST['id_lesson'];
+    $id_lesson  = $_POST['id_lesson']; 
     $attend     = $_POST['attend'];
     //insert
     if(isset($_POST['insert'])){
-        global $wpdb;
+        
+        $rowStudent = $wpdb->get_results("SELECT id, name, guardian FROM school_students WHERE id = $id_student");
+        
         $wpdb->insert(
                 'school_attendance', //table
                 array(
@@ -34,11 +34,24 @@ function NK_attendance_create () {
                 array('%s', '%s', '%s', '%s') //data format			
         );
         if($attend === '0' ){
-            $to = 'pawelbienko@live.com';
-            $name = 'Paweł Bieńko';
-            $mailMessage = smtp_email($mailer, $to, $name);    
+            $guardian = $rowStudent[0]->guardian;
+
+            $rowUsers  = $wpdb->get_results("SELECT *
+                                      FROM `wp_users` as u
+                                      LEFT JOIN `wp_usermeta` as m 
+                                      ON u.ID = m.user_id
+                                      WHERE m.meta_key LIKE 'phone_number' AND user_id = $guardian"
+            );
+
+            $to = $rowUsers[0]->user_email;
+          //$name = $rowUsers[0]->user_login;
+            $contactNumber = $rowUsers[0]->meta_value;
+
+            $mailMessage = wp_mail( $to, 'Nieobecność', 'Państwa dziecko jest nieobecne w szkole' );
+
+            $smsMessage = sendSms($contactNumber);
         }    
-        $message.="Informacja dodana !". $mailMessage;
+        $message.="Informacja dodana ! smsStatus =". $smsMessage . 'mail Status = ' . $mailMessage;
     }
     ?>
     <div class="container">
