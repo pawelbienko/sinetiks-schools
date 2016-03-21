@@ -4,38 +4,41 @@ function NK_attendance_update () {
     global $wpdb;
     
     $id   = $_GET["id"];
-    $mark = $_POST["mark"];
+    $attend = $_POST["attend"];
 ?>
     <div class="container">
-        <h2>Przedmiot</h2>
+        <h2>Obecność</h2>
         
         <?php    
             //update
         if(isset($_POST['update'])){	
             $wpdb->update(
-                'school_marks', //table
-                array('mark' => $mark), //data
+                'school_attendance', //table
+                array('attend' => $attend), //data
                 array( 'id' => $id ), //where
                 array('%s'), //data format
                 array('%s') //where format
             );
         ?>    
-            <div class="updated"><p>Ocena poprawiona</p></div>
-            <a href="<?php echo admin_url('admin.php?page=NK_mark_list')?>">&laquo; Powróć do listy</a>
+            <div class="updated"><p>Obecność poprawiona</p></div>
+            <a href="<?php echo admin_url('admin.php?page=NK_attendance_list')?>">&laquo; Powróć do listy</a>
         <?php    
         }else{//selecting value to update	
-            $marks = $wpdb->get_results($wpdb->prepare("SELECT id, mark from school_marks where id=%s",$id));
-            foreach ($marks as $s ){
-                $mark = $s->mark;
+            $attendance = $wpdb->get_results($wpdb->prepare("SELECT id, attend from school_attendance where id=%s",$id));
+            foreach ($attendance as $s ){
+                $attend= $s->attend;
             }
         ?>
             <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
                 <div class="form-group">
-                    <label for="nazwa">Ocena</label>
-                    <input type="text" class="form-control" name="mark" id="nazwa" placeholder="Ocena" value="<?php echo $mark;?>">
+                    <label for="nazwa">Obecny</label>
+                    <select name="attend" class="form-control">
+                        <option <?php if ($attend == 1 ) echo 'selected' ; ?> value="1">Tak</option>';
+                        <option <?php if ($attend == 0 ) echo 'selected' ; ?> value="0">Nie</option>';
+                    </select>
                 </div>
                 <button type="submit"  name="update" class="btn btn-default">Zapisz</button>
-                <a href="<?php echo admin_url('admin.php?page=NK_mark_list')?>">&laquo; Powróć do listy</a>
+                <a href="<?php echo admin_url('admin.php?page=NK_attendance_list')?>">&laquo; Powróć do listy</a>
             </form>
         <?php    
         }

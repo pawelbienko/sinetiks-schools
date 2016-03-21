@@ -2,11 +2,24 @@
 
 function NK_schools_scheduler () {
     require_once(ROOTDIR . DS . 'function'. DS . 'loadCSS.php');
+    global $wpdb;
 ?>
     <div class="container">
     <h2>Plan zajęć</h2>
     <?php
-    global $wpdb;
+    
+    if(isset($_POST['delete'])){
+        $id = $_POST['id'];
+        $wpdb->query($wpdb->prepare("DELETE FROM school_scheduler WHERE id = %s",$id));
+        
+        $message.="Lekcja usunięta !";
+    }    
+    if (isset($message)): ?>
+        <div class="updated">
+            <p><?php echo $message;?></p>
+        </div>
+    <?php endif;
+    
     $rowsSubject  = $wpdb->get_results("SELECT id, name from school_subjects");
     $rowsTeachers = $wpdb->get_results("SELECT u.ID as id, user_login as name
                                         FROM `wp_users` as u
@@ -45,7 +58,6 @@ function NK_schools_scheduler () {
             $message.="Dodano do planu lekcji !";
         }
         ?>
-        <?php if (isset($message)): ?><div class="updated"><p><?php echo $message;?></p></div><?php endif;?>
 
         <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
             <div class="form-group">
@@ -113,11 +125,11 @@ function NK_schools_scheduler () {
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Przedmiot</th><th>Nauczyciel</th><th>Klasa</th><th>Godzina lekcyjna</th><th>Klasa Lekcyjna</th><th>&nbsp;</th>
+                        <th>Przedmiot</th><th>Nauczyciel</th><th>Klasa</th><th>Godzina lekcyjna</th><th>Klasa Lekcyjna</th><th>Akcje</th>
                     </tr>
                 </thead>
                 <tbody>
-         <?php       
+        <?php       
                 foreach ($rowsScheduler as $row ){
                     echo '<tr>'
                       . '<td>'. $row->subject. '</td>'
@@ -126,8 +138,8 @@ function NK_schools_scheduler () {
                       . '<td>'. $row->lesson.'</td>'
                       . '<td>'. $row->class_room.'</td>';
                     ?>
-                        <td>
-                            <div class="col-md-4">
+                        <td class="col-md-5">
+                            <div class="col-md-3">
                                 <a class='btn btn-default' href="<?php echo admin_url('admin.php?page=NK_schools_scheduler_update&id='.$row->id)?>">Popraw dane</a>
                             </div>
                             <div class="col-md-2">
@@ -154,8 +166,4 @@ function NK_schools_scheduler () {
     ?>
     </div>
 <?php
-    if(isset($_POST['delete'])){
-        $id = $_POST['id'];
-        $wpdb->query($wpdb->prepare("DELETE FROM school_scheduler WHERE id = %s",$id));
-    }
 }
