@@ -22,12 +22,13 @@ function NK_attendance_list () {
     ?>
     <a class='btn btn-default' href="<?php echo admin_url('admin.php?page=NK_attendance_create'); ?>">Dodaj</a>
     <?php
-    $rows = $wpdb->get_results("SELECT id, student_id, lesson_id, date, attend from school_attendance");
+    $rows = $wpdb->get_results("SELECT att.id, stu.name as student_id, lesson_id, date, attend from school_attendance att
+                                LEFT JOIN school_students as stu ON att.student_id = stu.id");
     echo "<table class='table'>";
-    echo "<tr><th>ID</th><th>Uczeń</th><th>Lekcja</th><th>Data</th><th>Obecność</th><th>Akcje</th></tr>";
+    echo "<tr><th>Uczeń</th><th>Lekcja</th><th>Data</th><th>Obecność</th><th>Akcje</th></tr>";
     foreach ($rows as $row ){
             echo "<tr>";
-            echo "<td>$row->id</td>";
+            //echo "<td>$row->id</td>";
             echo "<td>$row->student_id</td>";
             echo "<td>$row->lesson_id</td>";
             echo "<td>$row->date</td>";

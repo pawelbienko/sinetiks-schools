@@ -51,7 +51,7 @@ function NK_attendance_create () {
 
             $smsMessage = sendSms($contactNumber);
         }    
-        $message.="Informacja dodana ! smsStatus =". $smsMessage . 'mail Status = ' . $mailMessage;
+        $message.="Informacja dodana !";
     }
     ?>
     <div class="container">

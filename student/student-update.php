@@ -35,7 +35,7 @@ function NK_student_update () {
                     <input type="text" class="form-control" name="name" id="nazwa" placeholder="Nazwa" value="<?php echo $name;?>">
                 </div>
                 <button type="submit"  name="update" class="btn btn-default">Zapisz</button>
-                <a href="<?php echo admin_url('admin.php?page=NK_students_list')?>">&laquo; Powróć do listy</a>
+                <a href="<?php echo admin_url('admin.php?page=NK_student_list')?>">&laquo; Powróć do listy</a>
             </form>
         <?php    
         }

@@ -21,7 +21,7 @@ function sendSms($contactNumber){
            return $status->getNumber() . ' ' . $status->getStatus();
         }
     } catch (\SMSApi\Exception\SmsapiException $exception) {
-        /*echo*/ 'ERROR: ' . $exception->getMessage();
+        echo 'ERROR: ' . $exception->getMessage();
     }
 }    
 
