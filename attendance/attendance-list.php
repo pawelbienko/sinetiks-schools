@@ -32,7 +32,8 @@ function NK_attendance_list () {
             echo "<td>$row->student_id</td>";
             echo "<td>$row->lesson_id</td>";
             echo "<td>$row->date</td>";
-            echo "<td>$row->attend</td>";
+            $attend = $row->attend == 0 ? 'Nieobecny' : 'Obecny';
+            echo "<td>".$attend."</td>";
             ?>
             <td class="col-md-5">
                 <div class="col-md-3">

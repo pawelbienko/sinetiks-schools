@@ -18,9 +18,9 @@ function save_my_extra_user_fields( $user_id )
     { 
         return false; 
     }else{
-        if(isset($_POST['user_school_role']) && $_POST['user_school_role'] != ""){
-            update_usermeta( $user_id, 'user_school_role', $_POST['user_school_role'] );
-        }
+//        if(isset($_POST['user_school_role']) && $_POST['user_school_role'] != ""){
+//            update_usermeta( $user_id, 'user_school_role', $_POST['user_school_role'] );
+//        }
         if ( isset( $_POST['phone_number'] ) ) {
             update_user_meta( $user_id, 'phone_number', $_POST['phone_number'] );
         }
@@ -30,4 +30,15 @@ function save_my_extra_user_fields( $user_id )
 function add_roles_on_plugin_activation() {
     add_role( 'guard_role', 'Opiekun', array('read' => false ) );
     add_role( 'teacher_role', 'Nauczyciel', array( 'read' => true ) );
+    
+    $roles = array(
+        'editor',
+        'author',
+        'contributor',
+        'subscriber'
+    );
+
+    foreach ($roles as $role) {
+        wp_roles()->remove_role( $role );
+    }
 }

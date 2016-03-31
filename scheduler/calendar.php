@@ -14,7 +14,22 @@ class Calendar {
     }
      
     /********************* PROPERTY ********************/  
-    private $dayLabels = array("Mon","Tue","Wed","Thu","Fri","Sat","Sun");
+    private $dayLabels = array("Pon","Wto","Śro","Czw","Pią","Sob","Nie");
+    
+    private $monthLabels = array(
+                                1 => 'styczeń',
+                                2 => 'luty',
+                                3 => 'marzec',
+                                4 => 'kwiecień',
+                                5 => 'maj',
+                                6 => 'czerwiec',
+                                7 => 'lipiec',
+                                8 => 'sierpień',
+                                9 => 'wrzesień',
+                                10 => 'październik',
+                                11 => 'listopad',
+                                12 => 'grudzień'
+        );
      
     private $currentYear=0;
      
@@ -142,12 +157,12 @@ class Calendar {
         $preMonth = $this->currentMonth==1?12:intval($this->currentMonth)-1;
          
         $preYear = $this->currentMonth==1?intval($this->currentYear)-1:$this->currentYear;
-         
+
         return
             '<div class="header">'.
-                '<a class="prev" href="'.$this->naviHref.'month='.sprintf('%02d',$preMonth).'&year='.$preYear.'">Prev</a>'.
-                    '<span class="title">'.date('Y M',strtotime($this->currentYear.'-'.$this->currentMonth.'-1')).'</span>'.
-                '<a class="next" href="'.$this->naviHref.'month='.sprintf("%02d", $nextMonth).'&year='.$nextYear.'">Next</a>'.
+                '<a class="prev" href="'.$this->naviHref.'month='.sprintf('%02d',$preMonth).'&year='.$preYear.'">Poprzedni</a>'.
+                    '<span class="title">'.date('Y', strtotime($this->currentYear.'-'.$this->currentMonth.'-1')). ' '. $this->monthLabels[date('n', strtotime($this->currentYear.'-'.$this->currentMonth.'-1'))].'</span>'.
+                '<a class="next" href="'.$this->naviHref.'month='.sprintf("%02d", $nextMonth).'&year='.$nextYear.'">Następny</a>'.
             '</div>';
     }
          

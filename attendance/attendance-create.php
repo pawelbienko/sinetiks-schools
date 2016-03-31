@@ -44,14 +44,16 @@ function NK_attendance_create () {
             );
 
             $to = $rowUsers[0]->user_email;
-          //$name = $rowUsers[0]->user_login;
+            $name = $rowUsers[0]->user_login;
             $contactNumber = $rowUsers[0]->meta_value;
+            $studentName = $rowStudent[0]->name;
+            $text = "$name Twoje dziecko $studentName  jest nieobecne w szkole";
 
-            $mailMessage = wp_mail( $to, 'Nieobecność', 'Państwa dziecko jest nieobecne w szkole' );
+            $mailMessage = wp_mail( $to, 'Nieobecność', $text );
 
-            $smsMessage = sendSms($contactNumber);
+            $smsMessage = sendSms($contactNumber, $text);
         }    
-        $message.="Informacja dodana !";
+        $message.="Obecność dodana !";
     }
     ?>
     <div class="container">
@@ -85,8 +87,8 @@ function NK_attendance_create () {
         <div class="form-group">
           <label for="">Obecny</label>
           <select name="attend" class="form-control">
-            <option value="1">Tak</option>';
-            <option value="0">Nie</option>';
+            <option value="1">Obecny</option>';
+            <option value="0">Nieobecny</option>';
           </select>
         </div>
         <button type="submit" name="insert" class="btn btn-default">Zapisz</button>
