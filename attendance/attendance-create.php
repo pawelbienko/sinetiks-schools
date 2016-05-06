@@ -45,12 +45,12 @@ function NK_attendance_create () {
 
             $to = $rowUsers[0]->user_email;
             $name = $rowUsers[0]->user_login;
-            $contactNumber = $rowUsers[0]->meta_value;
             $studentName = $rowStudent[0]->name;
             $text = "$name Twoje dziecko $studentName  jest nieobecne w szkole";
 
             $mailMessage = wp_mail( $to, 'Nieobecność', $text );
-
+            
+            $contactNumber = $rowUsers[0]->meta_value;
             $smsMessage = sendSms($contactNumber, $text);
         }    
         $message.="Obecność dodana !";

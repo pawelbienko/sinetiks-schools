@@ -3,6 +3,7 @@
 *@author  Xu Ding
 *@email   thedilab@gmail.com
 *@website http://www.StarTutorial.com
+* Edited Natalia Kotula
 **/
 class Calendar {  
      
@@ -159,10 +160,14 @@ class Calendar {
         $preYear = $this->currentMonth==1?intval($this->currentYear)-1:$this->currentYear;
 
         return
-            '<div class="header">'.
-                '<a class="prev" href="'.$this->naviHref.'month='.sprintf('%02d',$preMonth).'&year='.$preYear.'">Poprzedni</a>'.
-                    '<span class="title">'.date('Y', strtotime($this->currentYear.'-'.$this->currentMonth.'-1')). ' '. $this->monthLabels[date('n', strtotime($this->currentYear.'-'.$this->currentMonth.'-1'))].'</span>'.
-                '<a class="next" href="'.$this->naviHref.'month='.sprintf("%02d", $nextMonth).'&year='.$nextYear.'">Następny</a>'.
+            '<div>'.
+                '<div class="col-md-3"><a class="prev btn btn-primary" href="'.$this->naviHref.'month='.sprintf('%02d',$preMonth).'&year='.$preYear.'">Poprzedni</a></div>'.
+                    '<div class="col-md-6">'
+                        . '<div class="col-md-6 col-md-offset-4"><h4 class="">'
+                            .date('Y', strtotime($this->currentYear.'-'.$this->currentMonth.'-1')). ' '. $this->monthLabels[date('n', strtotime($this->currentYear.'-'.$this->currentMonth.'-1'))].''
+                        . '</h4></div>'
+                    . '</div>'.
+                '<div class="col-md-3"><a class="next btn btn-primary pull-right" href="'.$this->naviHref.'month='.sprintf("%02d", $nextMonth).'&year='.$nextYear.'">Następny</a></div>'.
             '</div>';
     }
          
