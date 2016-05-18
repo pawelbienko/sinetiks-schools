@@ -46,7 +46,7 @@ function NK_schools_modifymenu() {
 
     //this submenu is HIDDEN, however, we need to add it anyways
     add_submenu_page(null, //parent slug
-        'Popraw Klasę', //page title
+        'Edytuj', //page title
         'Popraw', //menu title
         'manage_options', //capability
         'NK_class_update', //menu slug
@@ -63,7 +63,7 @@ function NK_schools_modifymenu() {
 
     //this submenu is HIDDEN, however, we need to add it anyways
     add_submenu_page(null, //parent slug
-        'Popraw plan zajęć', //page title
+        'Edytuj', //page title
         'Popraw', //menu title
         'manage_options', //capability
         'NK_schools_scheduler_update', //menu slug
@@ -89,7 +89,7 @@ function NK_schools_modifymenu() {
 
     //this submenu is HIDDEN, however, we need to add it anyways
     add_submenu_page(null, //parent slug
-        'Popraw przedmiot', //page title
+        'Edytuj', //page title
         'Popraw', //menu title
         'manage_options', //capability
         'NK_subject_update', //menu slug
@@ -115,7 +115,7 @@ function NK_schools_modifymenu() {
 
     //this submenu is HIDDEN, however, we need to add it anyways
     add_submenu_page(null, //parent slug
-        'Popraw ucznia', //page title
+        'Edytuj', //page title
         'Popraw', //menu title
         'manage_options', //capability
         'NK_student_update', //menu slug
@@ -141,7 +141,7 @@ function NK_schools_modifymenu() {
 
     //this submenu is HIDDEN, however, we need to add it anyways
     add_submenu_page(null, //parent slug
-        'Popraw ocene', //page title
+        'Edytuj', //page title
         'Popraw', //menu title
         'read', //capability
         'NK_mark_update', //menu slug
@@ -167,7 +167,7 @@ function NK_schools_modifymenu() {
 
     //this submenu is HIDDEN, however, we need to add it anyways
     add_submenu_page(null, //parent slug
-        'Popraw obecność', //page title
+        'Edytuj', //page title
         'Popraw', //menu title
         'read', //capability
         'NK_attendance_update', //menu slug
