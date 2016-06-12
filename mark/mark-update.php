@@ -7,7 +7,7 @@ function NK_mark_update () {
     $mark = $_POST["mark"];
 ?>
     <div class="container">
-        <h2>Przedmiot</h2>
+        <h2>Ocena</h2>
         
         <?php    
             //update

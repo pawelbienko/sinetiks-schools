@@ -39,8 +39,8 @@ function NK_student_list() {
                     echo "<td>$row->id_class</td>";
             ?>        
                     <td class="col-md-5">
-                        <div class="col-md-3">
-                            <a class='btn btn-default' href="<?php echo admin_url('admin.php?page=NK_student_update&id='.$row->id)?>">Popraw dane</a>
+                        <div class="col-md-2">
+                            <a class='btn btn-default' href="<?php echo admin_url('admin.php?page=NK_student_update&id='.$row->id)?>">Edytuj</a>
                         </div>
                         <div class="col-md-2">
                             <form class="form-inline" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">

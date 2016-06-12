@@ -32,7 +32,7 @@ function NK_mark_create () {
         <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">   
         
         <div class="form-group">
-          <label for="">Przedmiot</label>
+          <label for="">Uczeń</label>
           <select name="id_student" class="form-control">
           <?php    
             foreach ($rowsStudent as $row ){

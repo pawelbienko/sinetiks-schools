@@ -21,6 +21,17 @@ function NK_attendance_create () {
     //insert
     if(isset($_POST['insert'])){
         
+        $date  = date("Y-m-d");
+
+        $rowsLesson = $wpdb->get_results("SELECT subject, lesson, sub.name
+                                            FROM school_scheduler as sch
+                                            LEFT JOIN school_subjects as sub
+                                            ON sch.subject = sub.id
+                                            WHERE subject_date = '$date'");
+    
+        $lesson = $rowsLesson[0]->lesson;
+        $lessonName = $rowsLesson[0]->name;
+        
         $rowStudent = $wpdb->get_results("SELECT id, name, guardian FROM school_students WHERE id = $id_student");
         
         $wpdb->insert(
@@ -46,8 +57,8 @@ function NK_attendance_create () {
             $to = $rowUsers[0]->user_email;
             $name = $rowUsers[0]->user_login;
             $studentName = $rowStudent[0]->name;
-            $text = "$name Twoje dziecko $studentName  jest nieobecne w szkole";
-
+            $text = "$name Twoje dziecko $studentName  jest nieobecne w szkole na lekcji $lesson. $lessonName";
+            
             $mailMessage = wp_mail( $to, 'Nieobecność', $text );
             
             $contactNumber = $rowUsers[0]->meta_value;
@@ -63,7 +74,7 @@ function NK_attendance_create () {
         <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">   
         
         <div class="form-group">
-          <label for="">Student</label>
+          <label for="">Uczeń</label>
           <select name="id_student" class="form-control">
           <?php    
             foreach ($rowsStudent as $row ){
@@ -85,7 +96,7 @@ function NK_attendance_create () {
         </div>
             
         <div class="form-group">
-          <label for="">Obecny</label>
+          <label for="">Obecność</label>
           <select name="attend" class="form-control">
             <option value="1">Obecny</option>';
             <option value="0">Nieobecny</option>';
